@@ -10,7 +10,6 @@ public class BinaryTree {
   int data = 0;
   BinaryTree left = null;
   BinaryTree right = null;
-  boolean oneChild = false;
 
   /**
    * Constructor
@@ -166,10 +165,10 @@ public class BinaryTree {
    * Remove nodes from tree
    * 
    * @param int key
-   * @return void
+   * @return boolean
    */
-  public void remove(int key) {
-    this.oneChild = false;
+  public boolean remove(int key) {
+    boolean result = false;
 
     // The node is not empty
     if (this.empty != true) {
@@ -192,7 +191,7 @@ public class BinaryTree {
 
         // 1 child case true
         else if (this.right != null || this.left != null) {
-          this.oneChild = true;
+          result = true;
         }
 
         // Leaf case set empty
@@ -206,7 +205,7 @@ public class BinaryTree {
         this.left.remove(key);
 
         // One child case?
-        if (this.left.oneChild == true) {
+        if (this.left.remove(key) == true) {
 
           // Is it on the left or right side?
           if (this.left.left != null) {
@@ -225,7 +224,7 @@ public class BinaryTree {
         this.right.remove(key);
 
         // One child case?
-        if (this.right.oneChild == true) {
+        if (this.right.remove(key) == true) {
 
           // Is it on the left or right side?
           if (this.right.right != null) {
@@ -248,6 +247,7 @@ public class BinaryTree {
         this.right = null;
       }
     }
+    return result;
   }
 
   /**
